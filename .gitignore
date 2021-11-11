@@ -1,0 +1,6 @@
+# Project exclude paths
+/Login-Api/target/
+/Login-Common/target/
+/Login-Mapper/target/
+/Login-Pojo/target/
+/Login-Service/target/
