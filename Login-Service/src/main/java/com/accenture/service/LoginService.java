@@ -1,6 +1,6 @@
-package com.Accenture.service;
+package com.accenture.service;
 
-import com.Accenture.pojo.User;
+import com.accenture.pojo.User;
 
 public interface LoginService {
 

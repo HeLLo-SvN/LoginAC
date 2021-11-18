@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Login-Pojo" />
-        <module name="Login-Api" />
-        <module name="Login-Service" />
         <module name="Login-Common" />
+        <module name="Login-Api" />
+        <module name="Login-Pojo" />
+        <module name="Login-Service" />
         <module name="Login-Mapper" />
       </profile>
     </annotationProcessing>

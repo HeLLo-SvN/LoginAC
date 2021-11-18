@@ -1,4 +1,4 @@
-package com.Accenture.config;
+package com.accenture.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("com.Accenture.controller"))
+                        .basePackage("com.accenture.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

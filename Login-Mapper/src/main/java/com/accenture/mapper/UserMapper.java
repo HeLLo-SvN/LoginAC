@@ -1,6 +1,6 @@
-package com.Accenture.mapper;
+package com.accenture.mapper;
 
-import com.Accenture.pojo.User;
+import com.accenture.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 

@@ -1,9 +1,9 @@
-package com.Accenture.service.impl;
+package com.accenture.service.impl;
 
-import com.Accenture.mapper.UserMapper;
-import com.Accenture.pojo.User;
-import com.Accenture.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.accenture.mapper.UserMapper;
+import com.accenture.pojo.Jwt;
+import com.accenture.pojo.User;
+import com.accenture.service.LoginService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

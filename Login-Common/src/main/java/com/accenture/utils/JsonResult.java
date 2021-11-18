@@ -1,4 +1,4 @@
-package com.Accenture.utils;
+package com.accenture.utils;
 
 import lombok.Data;
 

@@ -1,11 +1,9 @@
-package com.Accenture.controller;
+package com.accenture.controller;
 
-import com.Accenture.pojo.User;
-import com.Accenture.service.LoginService;
-import com.Accenture.utils.CookieUtils;
-import com.Accenture.utils.JsonResult;
-import com.Accenture.utils.JsonUtils;
-import com.Accenture.utils.RedisUtils;
+import com.accenture.pojo.Jwt;
+import com.accenture.pojo.User;
+import com.accenture.service.LoginService;
+import com.accenture.utils.*;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("accenture")
-public class LoginController {
+public class LoginController{
 
     @Autowired
     private LoginService loginService;
     @Autowired
     private RedisUtils redis;
+    @Autowired
+    private JwtUtils jwt;
 
     @ApiOperation(value = "用户注册",notes = "持久化用户注册信息",httpMethod = "POST")
     @PostMapping("/regist")
     public JsonResult regist(@RequestParam String userName,
-                             @RequestParam String password,
-                             HttpServletRequest request,
-                             HttpServletResponse response) {
+                             @RequestParam String password) {
 
         if (StringUtils.isBlank(userName) ||
                 StringUtils.isBlank(password)) {
@@ -48,24 +44,13 @@ public class LoginController {
 
         loginService.register(userName, password);
 
-        String token = UUID.randomUUID().toString().trim();
-        redis.set("REDIS_TOKEN:" + userName, token);
-
-        List<String> userLogin = new ArrayList<>();
-        userLogin.add(userName);
-        userLogin.add(token);
-
-        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(userLogin),true);
-
         return JsonResult.ok(userName);
     }
 
     @ApiOperation(value = "用户登录",notes = "查询用户信息是否存在于数据库",httpMethod = "POST")
     @PostMapping("/login")
     public JsonResult login(@RequestParam String userName,
-                            @RequestParam String password,
-                            HttpServletRequest request,
-                            HttpServletResponse response) {
+                            @RequestParam String password) {
 
         if (StringUtils.isBlank(userName) ||
                 StringUtils.isBlank(password)) {
@@ -78,18 +63,15 @@ public class LoginController {
             return  JsonResult.errorMsg("用户名或密码输入错误");
         }
 
-        String token = UUID.randomUUID().toString().trim();
-        redis.set("REDIS_TOKEN:" + userName, token);
+        Jwt jwtInfo = Jwt.builder()
+                .userName(userName)
+                .token(jwt.createJwtToken(userName))
+                .refreshToken(UUID.randomUUID().toString())
+                .build();
 
-        List<String> userLogin = new ArrayList<>();
-        userLogin.add(userName);
-        userLogin.add(token);
+        redis.set(jwtInfo.getRefreshToken(),JsonUtils.objectToJson(jwtInfo),60*60);
 
-        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(userLogin),true);
-
-        userResult.setPassword("******");
-
-        return JsonResult.ok(userResult);
+        return JsonResult.ok(jwtInfo);
     }
 
 }

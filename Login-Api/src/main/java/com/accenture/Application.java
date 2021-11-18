@@ -1,10 +1,12 @@
-package com.Accenture;
+package com.accenture;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
-@MapperScan(basePackages = "com.Accenture.mapper")
+@MapperScan(basePackages = "com.accenture.mapper")
+@ServletComponentScan
 
 @SpringBootApplication
 public class Application {

@@ -1,4 +1,4 @@
-package com.Accenture.pojo;
+package com.accenture.pojo;
 
 import lombok.Data;
 
