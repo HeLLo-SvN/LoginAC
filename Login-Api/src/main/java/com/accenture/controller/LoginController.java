@@ -1,5 +1,6 @@
 package com.accenture.controller;
 
+import com.accenture.cache.RedisCache;
 import com.accenture.pojo.Jwt;
 import com.accenture.pojo.User;
 import com.accenture.service.LoginService;
@@ -22,8 +23,11 @@ public class LoginController{
 
     @Autowired
     private LoginService loginService;
+//    @Autowired
+//    private RedisUtils redis;
     @Autowired
-    private RedisUtils redis;
+    private RedisCache redis;
+
     @Autowired
     private JwtUtils jwt;
 
@@ -69,7 +73,8 @@ public class LoginController{
                 .refreshToken(UUID.randomUUID().toString())
                 .build();
 
-        redis.set(jwtInfo.getRefreshToken(),JsonUtils.objectToJson(jwtInfo),60*60);
+        //redis.set(jwtInfo.getRefreshToken(),JsonUtils.objectToJson(jwtInfo),60*60);
+        redis.autoCacheManager(jwtInfo.getRefreshToken(), jwtInfo);
 
         return JsonResult.ok(jwtInfo);
     }

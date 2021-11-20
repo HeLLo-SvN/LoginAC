@@ -1,7 +1,6 @@
 package com.accenture.service.impl;
 
 import com.accenture.mapper.UserMapper;
-import com.accenture.pojo.Jwt;
 import com.accenture.pojo.User;
 import com.accenture.service.LoginService;
 import org.springframework.stereotype.Service;
